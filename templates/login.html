@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-3">Login</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email(class="form-control mb-3", placeholder="Email") }}
+    {{ form.password(class="form-control mb-3", placeholder="Password") }}
+    {{ form.submit(class="btn btn-success w-100") }}
+</form>
+
+{% endblock %}
