@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="hero">
+    <h1>Hello, I’m a BIT Student 👋</h1>
+    <p>
+        This personal portfolio website is developed using Flask,
+        Bootstrap, and SQLAlchemy as part of my Web Technology assignment.
+    </p>
+</div>
+
+<h3 class="mb-3">My Projects</h3>
+
+{% if projects %}
+    {% for p in projects %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>{{ p.title }}</h5>
+            <p>{{ p.description }}</p>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No projects added yet.</p>
+{% endif %}
+
+{% endblock %}

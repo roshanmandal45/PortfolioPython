@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-3">Create Account</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username(class="form-control mb-3", placeholder="Username") }}
+    {{ form.email(class="form-control mb-3", placeholder="Email") }}
+    {{ form.password(class="form-control mb-3", placeholder="Password (min 8 characters)") }}
+    {{ form.submit(class="btn btn-primary w-100") }}
+</form>
+
+{% endblock %}
