@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Contact Us</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name(class="form-control mb-2", placeholder="Your Name") }}
+    {{ form.email(class="form-control mb-2", placeholder="Your Email") }}
+    {{ form.message(class="form-control mb-2", placeholder="Your Message") }}
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+
+{% endblock %}
+
+
