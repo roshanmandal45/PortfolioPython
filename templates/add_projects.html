@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Add Project</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.title(class="form-control mb-2", placeholder="Project Title") }}
+    {{ form.description(class="form-control mb-2", placeholder="Description") }}
+    {{ form.submit(class="btn btn-dark") }}
+</form>
+
+{% endblock %}
+
