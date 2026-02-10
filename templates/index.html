@@ -1,48 +1,74 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-
 <hr>
 
-<div class="hero" class="text-center mt-5">
+<!-- HERO SECTION -->
+<div class="hero text-center mt-5">
     <img src="{{ url_for('static', filename='images/profile.jpg') }}"
-         class="profile-img animate-float">
+         class="profile-img mb-3">
 
-    <h2 class="mt-3">Hi, I'm Roshan 👋</h2>
-    <p class="lead">
+    <h2 class="mt-3 animate__animated animate__fadeInDown">Hi, I'm Roshan 👋</h2>
+    <p class="lead animate__animated animate__fadeInUp">
         Flask Developer • React Learner • Cloud Enthusiast
     </p>
 </div>
 
+<!-- SKILLS -->
 <div class="row mt-5 text-center">
-    <div class="col-md-4">
-        <h5>Backend</h5>
-        <p>Flask, Authentication, SQL</p>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 animate__animated animate__fadeInLeft">
+            <h5>Backend</h5>
+            <p>Flask, Authentication, SQL</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h5>Frontend</h5>
-        <p>HTML, CSS, Bootstrap, React</p>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 animate__animated animate__fadeInUp">
+            <h5>Frontend</h5>
+            <p>HTML, CSS, Bootstrap, React</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h5>Cloud</h5>
-        <p>Linux, AWS Basics</p>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 animate__animated animate__fadeInRight">
+            <h5>Cloud</h5>
+            <p>Linux, AWS Basics</p>
+        </div>
     </div>
 </div>
 
-<h3 class="mb-3">My Projects</h3>
+<!-- PROJECTS -->
+<h3 class="mb-3 mt-5 text-center animate__animated animate__fadeIn">My Projects</h3>
 
-{% if projects %}
-    {% for p in projects %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5>{{ p.title }}</h5>
-            <p>{{ p.description }}</p>
+<div class="row justify-content-center">
+    <!-- Example Project Card 1 -->
+    <div class="col-md-6">
+        <div class="card mb-3 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <h5 class="card-title">Portfolio Website</h5>
+                <p class="card-text">My personal portfolio built with Flask, Bootstrap, and a bit of JavaScript.</p>
+                <a href="https://github.com/yourusername/portfolio" target="_blank"
+                   class="btn btn-outline-primary btn-sm">
+                   <i class="fa-brands fa-github"></i> View on GitHub
+                </a>
+            </div>
         </div>
     </div>
-    {% endfor %}
-{% else %}
-    <p>No projects added yet.</p>
-{% endif %}
+
+    <!-- Example Project Card 2 -->
+    <div class="col-md-6">
+        <div class="card mb-3 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <h5 class="card-title">Weather App</h5>
+                <p class="card-text">A real-time weather app using Flask, OpenWeather API, and Bootstrap styling.</p>
+                <a href="https://github.com/yourusername/weather-app" target="_blank"
+                   class="btn btn-outline-primary btn-sm">
+                   <i class="fa-brands fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add more projects here manually in the same structure -->
+</div>
 
 {% endblock %}
