@@ -1,12 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="hero">
-    <h1>Hello, I’m a BIT Student 👋</h1>
-    <p>
-        This personal portfolio website is developed using Flask,
-        Bootstrap, and SQLAlchemy as part of my Web Technology assignment.
+
+
+<hr>
+
+<div class="hero" class="text-center mt-5">
+    <img src="{{ url_for('static', filename='images/profile.jpg') }}"
+         class="profile-img animate-float">
+
+    <h2 class="mt-3">Hi, I'm Roshan 👋</h2>
+    <p class="lead">
+        Flask Developer • React Learner • Cloud Enthusiast
     </p>
+</div>
+
+<div class="row mt-5 text-center">
+    <div class="col-md-4">
+        <h5>Backend</h5>
+        <p>Flask, Authentication, SQL</p>
+    </div>
+    <div class="col-md-4">
+        <h5>Frontend</h5>
+        <p>HTML, CSS, Bootstrap, React</p>
+    </div>
+    <div class="col-md-4">
+        <h5>Cloud</h5>
+        <p>Linux, AWS Basics</p>
+    </div>
 </div>
 
 <h3 class="mb-3">My Projects</h3>
