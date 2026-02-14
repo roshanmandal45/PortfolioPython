@@ -1,19 +1,28 @@
+import os
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from models import db, User, Project, ContactMessage
 from forms import RegisterForm, LoginForm, ProjectForm, ContactForm
-import os
 
-# -------------------- FLASK APP SETUP --------------------
-# Use /tmp for writable storage on Vercel
-app = Flask(__name__, instance_path="/tmp", static_folder="static")
+# -------------------------------
+# Flask app setup
+# -------------------------------
+
+app = Flask(__name__, static_folder="static")
 app.config.from_object(Config)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/database.db'  # SQLite in /tmp
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Ensure Vercel writable folder exists
+os.makedirs("/tmp", exist_ok=True)
+
+# Override database path to /tmp for Vercel
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/database.db"
 db.init_app(app)
+
+# -------------------------------
+# Login manager setup
+# -------------------------------
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -22,17 +31,20 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# -------------------- ROUTES --------------------
+# -------------------------------
+# Routes
+# -------------------------------
+
+@app.route("/")
+def index():
+    projects = Project.query.all()
+    return render_template("index.html", projects=projects)
+
 @app.route("/blogs")
 def blog():
     return render_template("blogs.html")
 
-@app.route('/')
-def index():
-    projects = Project.query.all()
-    return render_template('index.html', projects=projects)
-
-@app.route('/register', methods=['GET','POST'])
+@app.route("/register", methods=["GET","POST"])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -44,27 +56,27 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash("Registered successfully")
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
+        return redirect(url_for("login"))
+    return render_template("register.html", form=form)
 
-@app.route('/login', methods=['GET','POST'])
+@app.route("/login", methods=["GET","POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('dashboard'))
+            return redirect(url_for("dashboard"))
         flash("Invalid login")
-    return render_template('login.html', form=form)
+    return render_template("login.html", form=form)
 
-@app.route('/dashboard')
+@app.route("/dashboard")
 @login_required
 def dashboard():
     projects = Project.query.filter_by(user_id=current_user.id).all()
-    return render_template('dashboard.html', projects=projects)
+    return render_template("dashboard.html", projects=projects)
 
-@app.route('/add', methods=['GET','POST'])
+@app.route("/add", methods=["GET","POST"])
 @login_required
 def add_project():
     form = ProjectForm()
@@ -77,16 +89,16 @@ def add_project():
         db.session.add(project)
         db.session.commit()
         flash("Project added successfully!")
-        return redirect(url_for('dashboard'))
-    return render_template('add_project.html', form=form)
+        return redirect(url_for("dashboard"))
+    return render_template("add_project.html", form=form)
 
-@app.route('/project/edit/<int:id>', methods=['GET', 'POST'])
+@app.route("/project/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_project(id):
     project = Project.query.get_or_404(id)
     if project.owner != current_user:
         flash("You cannot edit this project!")
-        return redirect(url_for('dashboard'))
+        return redirect(url_for("dashboard"))
 
     form = ProjectForm(obj=project)
     if form.validate_on_submit():
@@ -94,24 +106,24 @@ def edit_project(id):
         project.description = form.description.data
         db.session.commit()
         flash("Project updated successfully!")
-        return redirect(url_for('dashboard'))
+        return redirect(url_for("dashboard"))
 
-    return render_template('edit_project.html', form=form)
+    return render_template("edit_project.html", form=form)
 
-@app.route('/project/delete/<int:id>', methods=['POST'])
+@app.route("/project/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_project(id):
     project = Project.query.get_or_404(id)
     if project.owner != current_user:
         flash("You cannot delete this project!")
-        return redirect(url_for('dashboard'))
+        return redirect(url_for("dashboard"))
 
     db.session.delete(project)
     db.session.commit()
     flash("Project deleted successfully!")
-    return redirect(url_for('dashboard'))
+    return redirect(url_for("dashboard"))
 
-@app.route('/contact', methods=['GET','POST'])
+@app.route("/contact", methods=["GET","POST"])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
@@ -123,17 +135,20 @@ def contact():
         db.session.add(msg)
         db.session.commit()
         flash("Message sent successfully!")
-        return redirect(url_for('contact'))
-    return render_template('contact.html', form=form)
+        return redirect(url_for("contact"))
+    return render_template("contact.html", form=form)
 
-@app.route('/logout')
+@app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
-# -------------------- RUN APP --------------------
-if __name__ == '__main__':
+# -------------------------------
+# Main entry
+# -------------------------------
+
+if __name__ == "__main__":
     with app.app_context():
-        db.create_all()  # creates tables in /tmp/database.db
+        db.create_all()  # Creates tables in /tmp/database.db
     app.run(debug=True)
