@@ -4,9 +4,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from models import db, User, Project, ContactMessage
 from forms import RegisterForm, LoginForm, ProjectForm, ContactForm
+import os
 
-app = Flask(__name__)
+# -------------------- FLASK APP SETUP --------------------
+# Use /tmp for writable storage on Vercel
+app = Flask(__name__, instance_path="/tmp", static_folder="static")
 app.config.from_object(Config)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/database.db'  # SQLite in /tmp
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
@@ -17,11 +22,10 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# -------------------- ROUTES --------------------
 @app.route("/blogs")
 def blog():
     return render_template("blogs.html")
-
-
 
 @app.route('/')
 def index():
@@ -128,7 +132,8 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+# -------------------- RUN APP --------------------
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        db.create_all()  # creates tables in /tmp/database.db
     app.run(debug=True)
