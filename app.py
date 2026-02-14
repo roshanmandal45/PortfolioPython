@@ -17,6 +17,12 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route("/blogs")
+def blog():
+    return render_template("blogs.html")
+
+
+
 @app.route('/')
 def index():
     projects = Project.query.all()

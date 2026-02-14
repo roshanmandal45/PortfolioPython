@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | My Portfolio</title>
+
+  <style>
+    /* ===== Global Styles ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
+      color: #333;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== Blog Grid ===== */
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    /* ===== Blog Card ===== */
+    .post {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .post img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .post h2 {
+      font-size: 22px;
+      margin: 15px;
+      color: #222;
+    }
+
+    .post p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 15px 15px 15px;
+      color: #555;
+    }
+
+    /* ===== Read More Button ===== */
+    .read-more {
+      display: inline-block;
+      margin: 0 15px 20px 15px;
+      padding: 8px 15px;
+      background: #2575fc;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .read-more:hover {
+      background: #6a11cb;
+    }
+
+    /* ===== Responsive Text ===== */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Blog & Insights</h1>
+    <p>Thoughts, tips, and tutorials from my tech journey.</p>
+  </header>
+
+  <!-- Blog Posts -->
+  <main class="container">
+    <section class="posts">
+      
+      <article class="post">
+        <img src="/static/images/blog1.jpg" alt="Web Dev Tips" />
+        <h2>10 Tips for Writing Clean HTML & CSS</h2>
+        <p>
+          Clean HTML and CSS make your site easier to maintain and faster to load.
+          In this post, I share practical tips to organize and structure your code...
+        </p>
+        <a href="#" class="read-more">Read More →</a>
+      </article>
+
+      <article class="post">
+        <img src="/static/images/blog2.jpg" alt="Flask Tips" />
+        <h2>Getting Started with Flask</h2>
+        <p>
+          Flask is a lightweight Python web framework perfect for small apps.
+          Learn how to set up routes, templates, and static files...
+        </p>
+        <a href="#" class="read-more">Read More →</a>
+      </article>
+
+      <article class="post">
+        <img src="/static/images/blog3.jpg" alt="Responsive UI" />
+        <h2>Responsive Design With Flexbox</h2>
+        <p>
+          Flexbox simplifies responsive layouts. In this article we break down
+          how to build flexible grids and sections that adapt beautifully...
+        </p>
+        <a href="#" class="read-more">Read More →</a>
+      </article>
+
+    </section>
+  </main>
+
+</body>
+</html>
